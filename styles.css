@@ -1,0 +1,635 @@
+/* 1. COLORS AND REUSABLE VALUES */
+:root {
+  --bg: #f5f7fb; --surface: rgba(255, 255, 255, 0.88); --surface-solid: #ffffff; --text: #172033;
+  --muted: #768097; --line: #e7eaf0; --primary: #7357e8; --primary-dark: #5c42cd;
+  --primary-soft: #eeeafd; --teal: #2bb5a3; --danger: #e05867;
+  --shadow: 0 20px 60px rgba(36, 43, 69, 0.09); --shadow-sm: 0 8px 24px rgba(36, 43, 69, 0.08);
+}
+
+/* 2. BASIC PAGE SETTINGS */
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0; min-height: 100vh; overflow-x: hidden; color: var(--text); background: var(--bg);
+  font-family: "DM Sans", sans-serif; transition: background .25s ease, color .25s ease;
+}
+button, input, select {
+  font: inherit;
+}
+button {
+  color: inherit;
+}
+button, select {
+  cursor: pointer;
+}
+svg {
+  width: 22px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* 3. BACKGROUND DECORATION */
+.ambient {
+  position: fixed; border-radius: 50%; filter: blur(1px); pointer-events: none; opacity: .65;
+  z-index: -1;
+}
+.ambient-one {
+  width: 420px; height: 420px; top: -230px; left: -160px;
+  background: radial-gradient(circle, #e7defe, transparent 67%);
+}
+.ambient-two {
+  width: 470px; height: 470px; right: -180px; top: 180px;
+  background: radial-gradient(circle, #dff8f2, transparent 67%);
+}
+
+/* 4. MAIN APP AND HEADER */
+.app-shell {
+  width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 46px;
+}
+.topbar {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 62px;
+}
+.brand {
+  color: var(--text); display: inline-flex; gap: 11px; align-items: center;
+  font: 800 21px "Manrope", sans-serif; text-decoration: none;
+}
+.brand-mark {
+  width: 37px; height: 37px; display: grid; place-items: center; border-radius: 12px;
+  background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(115, 87, 232, .25);
+}
+.brand-mark svg {
+  width: 23px; stroke-width: 2;
+}
+.header-actions {
+  display: flex; align-items: center; gap: 12px;
+}
+.icon-btn {
+  width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px;
+  border: 1px solid var(--line); background: var(--surface); transition: .2s ease;
+}
+.icon-btn:hover {
+  transform: translateY(-2px); border-color: #cfc7f9; box-shadow: var(--shadow-sm);
+}
+.moon-icon {
+  display: none;
+}
+.today-chip {
+  height: 42px; padding: 0 16px; display: flex; align-items: center; gap: 9px;
+  border: 1px solid var(--line); border-radius: 13px; color: var(--muted); background: var(--surface);
+  font-size: 13px; font-weight: 600;
+}
+.pulse-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--teal);
+  box-shadow: 0 0 0 4px rgba(43, 181, 163, .12);
+}
+
+/* 5. INTRODUCTION SECTION */
+.hero {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 50px; margin-bottom: 36px;
+}
+.eyebrow {
+  margin: 0 0 13px; color: var(--primary); font-size: 11px; line-height: 1; font-weight: 700;
+  letter-spacing: .18em;
+}
+.smart-label {
+  width: fit-content; padding: 11px 16px; border: 1px solid rgba(115, 87, 232, .22); border-radius: 10px;
+  background: var(--primary-soft); box-shadow: 0 8px 20px rgba(115, 87, 232, .12); font-size: 13px;
+  letter-spacing: .14em;
+}
+.hero h1 {
+  margin: 0; font: 800 clamp(34px, 4.5vw, 52px)/1.08 "Manrope", sans-serif; letter-spacing: -.045em;
+}
+.hero h1 span {
+  color: var(--primary);
+}
+.hero-copy {
+  max-width: 490px; margin: 19px 0 0; color: var(--muted); font-size: 16px; line-height: 1.7;
+}
+.progress-card {
+  min-width: 248px; padding: 19px 23px; display: flex; align-items: center; gap: 16px;
+  border: 1px solid var(--line); border-radius: 20px; background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.progress-card strong, .progress-card span {
+  display: block;
+}
+.progress-card strong {
+  margin-bottom: 4px; font-size: 14px;
+}
+.progress-card > div > span {
+  color: var(--muted); font-size: 12px;
+}
+.progress-ring {
+  --progress: 0deg; width: 56px; height: 56px; flex: 0 0 56px; display: grid; place-items: center;
+  border-radius: 50%; background: conic-gradient(var(--teal) var(--progress), var(--line) 0);
+  position: relative;
+}
+.progress-ring::before {
+  content: ""; position: absolute; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--surface-solid);
+}
+.progress-ring span {
+  position: relative; font-size: 11px; font-weight: 700;
+}
+
+/* 6. ADD TASK FORM */
+.composer-card {
+  border: 1px solid var(--line); border-radius: 22px; background: var(--surface-solid);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 42px;
+}
+.composer-main {
+  min-height: 79px; padding: 14px 16px 14px 22px; display: flex; align-items: center; gap: 16px;
+}
+.plus-badge {
+  width: 35px; height: 35px; flex: 0 0 35px; display: grid; place-items: center; border-radius: 11px;
+  color: var(--primary); background: var(--primary-soft); font-size: 24px; font-weight: 400;
+}
+.composer-main input {
+  min-width: 0; flex: 1; border: 0; outline: 0; color: var(--text); background: transparent;
+  font-size: 17px;
+}
+.composer-main input::placeholder {
+  color: #a0a7b8;
+}
+.add-btn {
+  height: 49px; padding: 0 20px; display: flex; align-items: center; gap: 14px; border: 0;
+  border-radius: 14px; color: white; background: var(--primary); font-weight: 700; transition: .2s ease;
+  box-shadow: 0 8px 20px rgba(115, 87, 232, .22);
+}
+.add-btn:hover {
+  background: var(--primary-dark); transform: translateY(-2px);
+}
+.add-btn svg {
+  width: 17px;
+}
+.composer-options {
+  min-height: 52px; padding: 8px 20px; display: flex; gap: 20px; align-items: center;
+  border-top: 1px solid var(--line); background: #fbfcfe;
+}
+.option-control {
+  display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 600;
+}
+.option-control svg {
+  width: 16px;
+}
+.option-control input, .option-control select {
+  max-width: 120px; border: 0; outline: 0; color: var(--muted); background: transparent; font-size: 12px;
+}
+.flag-icon {
+  color: var(--danger); font-size: 17px;
+}
+.keyboard-hint {
+  margin-left: auto; color: #a2a9b7; font-size: 11px;
+}
+kbd {
+  padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; background: white;
+  box-shadow: 0 1px 0 #d6dae2; font-size: 10px;
+}
+
+/* 7. TASK FILTERS AND SEARCH */
+.workspace {
+  border: 1px solid var(--line); border-radius: 23px; background: var(--surface);
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.workspace-head {
+  padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.tabs {
+  display: flex; gap: 4px;
+}
+.tab {
+  padding: 9px 13px; border: 0; border-radius: 10px; color: var(--muted); background: transparent;
+  font-size: 13px; font-weight: 600; transition: .18s ease;
+}
+.tab span {
+  margin-left: 5px; padding: 2px 6px; border-radius: 7px; background: #eef0f5; font-size: 10px;
+}
+.tab.active {
+  color: var(--primary); background: var(--primary-soft);
+}
+.tab.active span {
+  background: rgba(115, 87, 232, .13);
+}
+.tools {
+  display: flex; gap: 9px;
+}
+.search-box {
+  height: 38px; width: 175px; display: flex; align-items: center; gap: 7px; padding: 0 11px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--surface-solid);
+}
+.search-box svg {
+  width: 16px; color: var(--muted);
+}
+.search-box input {
+  min-width: 0; width: 100%; border: 0; outline: 0; color: var(--text); background: transparent;
+  font-size: 12px;
+}
+.sort-select {
+  height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; outline: 0;
+  color: var(--muted); background: var(--surface-solid); font-size: 12px;
+}
+
+/* 8. TASK CARDS */
+.task-list {
+  padding: 7px 17px;
+}
+.task-item {
+  margin: 9px 0; min-height: 76px; padding: 15px 12px 15px 16px; display: flex; align-items: center;
+  gap: 15px; border: 1px solid transparent; border-radius: 15px; background: var(--surface-solid);
+  box-shadow: 0 3px 13px rgba(35, 41, 65, .045); animation: taskIn .27s ease both; transition: .2s ease;
+}
+.task-item:hover {
+  border-color: var(--line); transform: translateY(-1px); box-shadow: var(--shadow-sm);
+}
+@keyframes taskIn {
+  from {
+    opacity: 0; transform: translateY(7px);
+  }
+}
+.check-btn {
+  width: 24px; height: 24px; flex: 0 0 24px; display: grid; place-items: center; padding: 0;
+  border: 1.5px solid #cdd2dc; border-radius: 8px; background: transparent; transition: .2s ease;
+}
+.check-btn:hover {
+  border-color: var(--teal); background: rgba(43, 181, 163, .08);
+}
+.check-btn svg {
+  width: 16px; color: white; opacity: 0; stroke-width: 2.4;
+}
+.task-content {
+  min-width: 0; flex: 1;
+}
+.task-title {
+  margin: 0 0 7px; overflow-wrap: anywhere; font-size: 14px; font-weight: 600;
+}
+.task-meta {
+  display: flex; gap: 7px; align-items: center; flex-wrap: wrap;
+}
+.meta-tag {
+  display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px;
+}
+.meta-tag svg {
+  width: 13px;
+}
+.priority-tag {
+  padding: 3px 7px; border-radius: 7px; font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.priority-high {
+  color: #c94c5c; background: #fcedef;
+}
+.priority-normal {
+  color: #6d56cf; background: #f0edfc;
+}
+.priority-low {
+  color: #318a7e; background: #e7f7f4;
+}
+.overdue {
+  color: var(--danger);
+}
+.task-actions {
+  display: flex; gap: 3px; opacity: 0; transform: translateX(4px); transition: .2s ease;
+}
+.task-item:hover .task-actions, .task-actions:focus-within {
+  opacity: 1; transform: none;
+}
+.task-action {
+  width: 35px; height: 35px; display: grid; place-items: center; border: 0; border-radius: 10px;
+  color: var(--muted); background: transparent; transition: .18s ease;
+}
+.task-action svg {
+  width: 17px;
+}
+.task-action:hover {
+  color: var(--primary); background: var(--primary-soft);
+}
+.delete-action:hover {
+  color: var(--danger); background: #fcedef;
+}
+.task-item.completed {
+  opacity: .64;
+}
+.task-item.completed .check-btn {
+  border-color: var(--teal); background: var(--teal);
+}
+.task-item.completed .check-btn svg {
+  opacity: 1;
+}
+.task-item.completed .task-title {
+  text-decoration: line-through; color: var(--muted);
+}
+
+/* 9. EMPTY LIST AND FOOTER */
+.empty-state {
+  padding: 58px 20px 64px; text-align: center;
+}
+.empty-art {
+  width: 105px; height: 105px; margin: 0 auto 20px; display: grid; place-items: center;
+  border-radius: 35px; color: var(--primary); background: var(--primary-soft); transform: rotate(-3deg);
+}
+.empty-art svg {
+  width: 74px; stroke-width: 1.5;
+}
+.empty-state h2 {
+  margin: 0 0 8px; font: 800 21px "Manrope", sans-serif;
+}
+.empty-state p {
+  margin: 0; color: var(--muted); font-size: 13px;
+}
+.list-footer {
+  min-height: 58px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--line); color: var(--muted); font-size: 12px;
+}
+.list-footer p {
+  margin: 0;
+}
+.list-footer strong {
+  color: var(--text);
+}
+.text-btn {
+  border: 0; color: var(--muted); background: transparent; font-size: 12px;
+}
+.text-btn:hover {
+  color: var(--danger);
+}
+.text-btn:disabled {
+  opacity: .4; cursor: default;
+}
+
+/* 10. EDIT TASK POPUP */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 20px;
+  background: rgba(20, 24, 38, .48); backdrop-filter: blur(7px);
+}
+.modal-backdrop[hidden] {
+  display: none;
+}
+.modal {
+  width: min(480px, 100%); padding: 27px; border: 1px solid var(--line); border-radius: 23px;
+  background: var(--surface-solid); box-shadow: 0 30px 80px rgba(18, 22, 35, .25);
+  animation: modalIn .22s ease;
+}
+@keyframes modalIn {
+  from {
+    opacity: 0; transform: translateY(12px) scale(.98);
+  }
+}
+.modal-head {
+  display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 25px;
+}
+.modal-head h2 {
+  margin: 0; font: 800 24px "Manrope", sans-serif;
+}
+.modal-head .icon-btn {
+  font-size: 24px;
+}
+.modal form > label, .edit-grid label {
+  display: grid; gap: 8px; color: var(--muted); font-size: 12px; font-weight: 600;
+}
+.modal input, .modal select {
+  width: 100%; height: 47px; padding: 0 13px; border: 1px solid var(--line); border-radius: 11px;
+  outline: none; color: var(--text); background: var(--bg);
+}
+.modal input:focus, .modal select:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft);
+}
+.edit-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 16px;
+}
+.modal-actions {
+  margin-top: 24px; display: flex; justify-content: flex-end; gap: 10px;
+}
+.secondary-btn, .primary-btn {
+  height: 43px; padding: 0 17px; border-radius: 11px; font-weight: 700; font-size: 13px;
+}
+.secondary-btn {
+  border: 1px solid var(--line); background: transparent;
+}
+.primary-btn {
+  border: 0; color: white; background: var(--primary);
+}
+
+/* 11. SUCCESS MESSAGE */
+.toast {
+  position: fixed; z-index: 20; left: 50%; bottom: 24px; padding: 11px 17px; display: flex;
+  align-items: center; gap: 9px; border: 1px solid var(--line); border-radius: 12px; color: var(--text);
+  background: var(--surface-solid); box-shadow: var(--shadow); font-size: 12px; font-weight: 600;
+  opacity: 0; pointer-events: none; transform: translate(-50%, 20px); transition: .25s ease;
+}
+.toast.show {
+  opacity: 1; transform: translate(-50%, 0);
+}
+.toast-icon {
+  width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; color: white;
+  background: var(--teal); font-size: 11px;
+}
+
+/* 12. DARK MODE COLORS */
+body.dark {
+  --bg: #111522; --surface: rgba(27, 32, 48, .9); --surface-solid: #1b2030; --text: #f3f5fa;
+  --muted: #969eb1; --line: #303648; --primary: #9279f3; --primary-dark: #7d62e2;
+  --primary-soft: #2b2847; --shadow: 0 20px 60px rgba(0, 0, 0, .22);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, .18);
+}
+body.dark .sun-icon {
+  display: none;
+}
+body.dark .moon-icon {
+  display: block;
+}
+body.dark .composer-options {
+  background: #181d2b;
+}
+body.dark kbd, body.dark .tab span {
+  color: var(--muted); background: #272d3e; border-color: var(--line);
+}
+body.dark .priority-high {
+  color: #ff9da9; background: #422830;
+}
+body.dark .priority-normal {
+  color: #bbaafc; background: #312c50;
+}
+body.dark .priority-low {
+  color: #7bd8cb; background: #203d3b;
+}
+
+/* 13. TABLET AND MOBILE DESIGN */
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 24px, 620px); padding-top: 18px;
+  }
+  .topbar {
+    margin-bottom: 40px;
+  }
+  .today-chip {
+    display: none;
+  }
+  .hero {
+    align-items: flex-start; flex-direction: column; gap: 26px;
+  }
+  .progress-card {
+    width: 100%;
+  }
+  .composer-main {
+    padding-left: 14px; gap: 10px;
+  }
+  .plus-badge {
+    display: none;
+  }
+  .add-btn {
+    padding: 0 15px;
+  }
+  .add-btn svg {
+    display: none;
+  }
+  .composer-options {
+    gap: 11px; overflow-x: auto;
+  }
+  .composer-options::-webkit-scrollbar {
+    display: none;
+  }
+  .option-control {
+    flex: 0 0 auto;
+  }
+  .keyboard-hint {
+    display: none;
+  }
+  .workspace-head {
+    align-items: stretch; flex-direction: column;
+  }
+  .tabs {
+    overflow-x: auto;
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    flex: 0 0 auto;
+  }
+  .tools {
+    width: 100%;
+  }
+  .search-box {
+    flex: 1; width: auto;
+  }
+  .task-actions {
+    opacity: 1; transform: none;
+  }
+  .list-footer {
+    padding-inline: 18px;
+  }
+}
+
+/* Small mobile phones */
+@media (max-width: 440px) {
+  .app-shell {
+    width: calc(100% - 16px); padding-bottom: 24px;
+  }
+  .topbar {
+    margin-bottom: 30px;
+  }
+  .brand {
+    font-size: 18px;
+  }
+  .brand-mark {
+    width: 34px; height: 34px;
+  }
+  .smart-label {
+    padding: 9px 11px; font-size: 10px; letter-spacing: .1em;
+  }
+  .hero h1 {
+    font-size: 34px;
+  }
+  .hero-copy {
+    font-size: 14px;
+  }
+  .progress-card {
+    min-width: 0; padding: 16px;
+  }
+  .composer-card, .workspace {
+    border-radius: 17px;
+  }
+  .composer-main input {
+    font-size: 14px;
+  }
+  .add-btn span {
+    display: none;
+  }
+  .add-btn::after {
+    content: "+"; font-size: 22px;
+  }
+  .add-btn {
+    width: 45px; justify-content: center;
+  }
+  .sort-select {
+    width: 125px;
+  }
+  .workspace-head {
+    padding: 14px 12px;
+  }
+  .tools {
+    flex-direction: column;
+  }
+  .search-box, .sort-select {
+    width: 100%;
+  }
+  .task-list {
+    padding-inline: 8px;
+  }
+  .task-item {
+    gap: 10px; padding-inline: 11px 7px;
+  }
+  .task-action {
+    width: 31px;
+  }
+  .task-actions {
+    gap: 0;
+  }
+  .list-footer {
+    min-height: 66px; gap: 12px;
+  }
+  .edit-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal {
+    padding: 21px 17px;
+  }
+}
+
+/* Extra-small mobile phones */
+@media (max-width: 350px) {
+  .hero h1 {
+    font-size: 29px;
+  }
+  .composer-options {
+    padding-inline: 13px;
+  }
+  .task-item {
+    align-items: flex-start;
+  }
+  .check-btn {
+    margin-top: 2px;
+  }
+  .task-actions {
+    flex-direction: column;
+  }
+  .list-footer {
+    align-items: flex-start; flex-direction: column; justify-content: center;
+  }
+}
+
+/* Accessibility: reduce animation if requested */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important; animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
