@@ -1,29 +1,32 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-    margin-top: 100px;
+.heading{
+    color:blue;
+    background-color:pink;
 }
-
-.container {
-    background-color: white;
-    width: 400px;
-    margin: auto;
-    padding: 20px;
-    border-radius: 10px;
+p{
+    color:greenyellow;
+    background-color: blueviolet;
 }
-
-input {
-    padding: 8px;
-    width: 200px;
+body{
+    background-color:rgb(171, 159, 130);
 }
-
-button {
-    padding: 8px 15px;
-    margin-left: 5px;
-    cursor: pointer;
+button{
+    color:blue;
+    background-color: antiquewhite;
 }
-
-#result {
-    margin-top: 20px;
+h2{
+    color:rgb(162, 134, 188);
+    background-color: green;
+}
+h3{
+    color:red;
+    background-color: blanchedalmond;
+}
+.box{
+    height: 100px;
+    width:100px;
+    border:2px solid black;
+    text-align:center;
+    background-color:rgb(142, 90, 11);
+    margin:5px;
+    
 }
